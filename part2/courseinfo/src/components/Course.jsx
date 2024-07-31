@@ -1,11 +1,14 @@
+import Header from "./Header";
+import Part from "./Part";
+
 const Course = (props) => {
-    const {courses} = props
+    const {course} = props
     return (
         <div>
-            <h1>Half Stack application development</h1>
-            {props.courses.map((c) => (
-                <p key={c.id}> {c.name} {c.exercieses} </p>
-            ))}
+            <Header name={course.name}/>
+            {course.parts.map(part => <Part key={part.id} content={part}/>)}
+
+           
         </div>
     );
 };

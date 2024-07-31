@@ -1,64 +1,42 @@
-const App = () => {
-  const course = {
-    name: 'Half Stack application development',
-    parts: [
-      {
-        name: 'Fundamentals of React',
-        exercises: 10
-      },
-      {
-        name: 'Using props to pass data',
-        exercises: 7
-      },
-      {
-        name: 'State of a component',
-        exercises: 14
-      }
-    ]
-  }
-  
-  const Header = ({ course }) => {
-   
-    return (
-      
-      <h1>{course.name}</h1>
-    )
-  }
-  
-  const Content = ({ course }) => {
-    return (
-      course.parts.map((part, index) => {
-        return (
-          <p key={index}>
-            {part.name} {part.exercises}
-          </p>
-        );
-      })
-    );
-  }
-  
-  
-  const Total = ({course}) => {
-    var total = 0;
+import React from 'react'
+import { useState } from 'react'
 
-    return (
-      <div>
-        {course.parts.map((part)=>{
-          total += part.exercises;
-        })}
-        <p>Number of exercises {total}</p>
-      </div>
-    )
+const App = () => {
+  // save clicks of each button to its own state
+  const [good, setGood] = useState(0)
+  const [neutral, setNeutral] = useState(0)
+  const [bad, setBad] = useState(0)
+
+  const goodCount = () => {
+    setGood(good + 1)
   }
+  const neutralCount = () => {
+    setNeutral(neutral + 1)
+  }
+  const badCount = () => {
+    setBad(bad + 1)
+  }
+  const total = good + neutral + bad
+  const average = (good - bad) / total
+  const positive = (good / total) * 100
 
   return (
     <div>
-      <Header course={course} />
-      <Content course={course}/>
-       <Total 
-        course={course} 
-      />
-      
+    
+      <h1>Give Feedback</h1>
+      <button onClick={goodCount}>Good</button>
+      <button onClick={neutralCount}>Neutral</button>
+      <button onClick={badCount}>Bad</button>
+    
+      <h1>Statistics</h1>
+      <p>Good {good}</p>
+      <p>Neutral {neutral}</p>
+      <p>Bad {bad} </p>
+      <p>All {total}</p>
+      <p>Average {isNaN(average) ? 0 : average}</p>
+      <p>Positive {isNaN(positive) ? 0 : positive} </p>
+
+
     </div>
   )
 }
