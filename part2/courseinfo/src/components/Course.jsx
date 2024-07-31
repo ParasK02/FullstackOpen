@@ -1,16 +1,27 @@
+/* eslint-disable react/prop-types */
 import Header from "./Header";
-import Part from "./Part";
+import Content from "./Content";
+import Total from "./Total"
 
 const Course = (props) => {
     const {course} = props
     return (
         <div>
-            <Header name={course.name}/>
-            {course.parts.map(part => <Part key={part.id} content={part}/>)}
+            <h1>Web Developmen Curriculum</h1>
+            {course.map((courses)=>{
+                return(
+                    <div key={courses.id}>
+                        <Header name={courses.name}/>
+                        <Content content={courses.parts}/>
+                        <Total number={courses.parts}/>
+                    </div>
+                )
+            })}
+            
 
            
         </div>
-    );
+    )
 };
 
 
