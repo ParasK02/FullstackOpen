@@ -1,33 +1,40 @@
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
 
+import personService from './services/persons'
+import './index.css'
+import ConfirmMessage from './components/ConfirmMessage'
+
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456', id: 1 },
-    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
-    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
-    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
-  ]) 
- 
-
-
-
- 
+  const [persons, setPersons] = useState([])//original copy
+  const [filteredList, setFilteredList] = useState([]) 
+  const [message, setMessage] = useState('')
   
-
- 
+  useEffect(() => {
+   
+    personService
+      .getAll()
+      .then(initialPersons => {
+        setPersons(initialPersons)
+        setFilteredList(initialPersons)
+      })
   
+  }
+  , [])
 
+  console.log(persons)
+  
   return (
     <div>
 
       <h2>Phonebook</h2>
-      <Filter persons={persons} setPersons={setPersons}/>
-      <PersonForm persons={persons} setPersons={setPersons} />
-      <Persons filteredPersons={persons}/>
+      <ConfirmMessage message={message}/>
+      <Filter persons={persons} setFilteredList={setFilteredList} />
+      <PersonForm persons={filteredList} setPersons={setFilteredList} setMessage={setMessage} />
+      <Persons filteredPersons={filteredList} setPersons={setFilteredList}/>
     </div>
     
   )
